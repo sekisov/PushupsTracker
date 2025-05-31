@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "PushupsTracker": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
