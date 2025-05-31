@@ -238,7 +238,7 @@ public class PushupsBotService
                 sb.AppendLine("├────────────┼────────────────────┼───────────────┤");
             }
 
-            sb.AppendLine($"│ {stat.Date:dd.MM.yyyy} │ {stat.UserName,-18} │ {stat.TotalCount,13} │");
+            sb.AppendLine($"│ {stat.Date:dd.MM.yyyy} │ {stat.Name,-18} │ {stat.TotalCount,13} │");
             currentDate = stat.Date;
         }
 
