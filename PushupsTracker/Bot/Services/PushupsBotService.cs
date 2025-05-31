@@ -210,7 +210,7 @@ public class PushupsBotService
 
         foreach (var stat in stats)
         {
-            sb.AppendLine($"│ {stat.UserName,-18} │ {stat.TotalCount,13} │");
+            sb.AppendLine($"│ {stat.Name,-18} │ {stat.TotalCount,13} │");
         }
 
         sb.AppendLine("└────────────────────┴───────────────┘");

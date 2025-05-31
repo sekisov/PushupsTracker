@@ -72,7 +72,7 @@ public class PushupsRepository : IPushupsRepository
     SELECT 
         u.UserId,
         u.UserName, 
-        CONCAT( u.FirstName , u.LastName) as Name,
+        CONCAT( u.FirstName ,' ', u.LastName) as Name,
         SUM(pr.Count) as TotalCount
     FROM PushupsRecords pr
     JOIN Users u ON pr.UserId = u.UserId
@@ -90,7 +90,7 @@ public class PushupsRepository : IPushupsRepository
             SELECT 
                 DATE(pr.RecordedAt) as Date,
                 u.UserName,
-                CONCAT( u.FirstName , u.LastName) as Name,
+                CONCAT( u.FirstName ,' ', u.LastName) as Name,
                 SUM(pr.Count) as TotalCount
             FROM PushupsRecords pr
             JOIN Users u ON pr.UserId = u.UserId
