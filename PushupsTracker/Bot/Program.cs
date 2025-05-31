@@ -5,16 +5,20 @@ using Microsoft.Extensions.Logging;
 using PushupsTracker.Bot.Services;
 using PushupsTracker.Core.Interfaces;
 using PushupsTracker.Infrastructure.Repositories;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Telegram.Bot;
-using Telegram.Bot.Polling;
-using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Types.ReplyMarkups;
 
-var builder = Host.CreateDefaultBuilder(args);
+var builder = Host.CreateDefaultBuilder(args)
+    .ConfigureLogging(logging =>
+    {
+        logging.ClearProviders();
+        logging.AddSimpleConsole(options =>
+        {
+            options.IncludeScopes = true;
+            options.SingleLine = true;
+            options.TimestampFormat = "HH:mm:ss ";
+        });
+        logging.SetMinimumLevel(LogLevel.Information);
+    });
 
 builder.ConfigureServices((context, services) =>
 {
