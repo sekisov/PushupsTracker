@@ -33,7 +33,7 @@ public class PushupsRepository : IPushupsRepository
         };
 
         const string query = @"
-            INSERT INTO PushupsRecords (UserId, Count, RecordedAt)
+            INSERT INTO pushupsrecords (UserId, Count, RecordedAt)
             VALUES (@UserId, @Count, @RecordedAt);
             SELECT LAST_INSERT_ID();";
 
@@ -60,7 +60,7 @@ public class PushupsRepository : IPushupsRepository
     {
         const string query = @"
         SELECT COALESCE(SUM(Count), 0) 
-        FROM PushupsRecords 
+        FROM pushupsrecords 
         WHERE UserId = @UserId AND DATE(RecordedAt) = CURDATE()";
 
         using var connection = CreateConnection();
@@ -73,8 +73,8 @@ public class PushupsRepository : IPushupsRepository
         u.UserId,
         u.UserName, 
         SUM(pr.Count) as TotalCount
-    FROM PushupsRecords pr
-    JOIN Users u ON pr.UserId = u.UserId
+    FROM pushupsrecords pr
+    JOIN users u ON pr.UserId = u.UserId
     WHERE DATE(pr.RecordedAt) = CURDATE()
     GROUP BY u.UserId, u.UserName
     ORDER BY TotalCount DESC;";
@@ -90,8 +90,8 @@ public class PushupsRepository : IPushupsRepository
                 DATE(pr.RecordedAt) as Date,
                 u.UserName,
                 SUM(pr.Count) as TotalCount
-            FROM PushupsRecords pr
-            JOIN Users u ON pr.UserId = u.UserId
+            FROM pushupsrecords pr
+            JOIN users u ON pr.UserId = u.UserId
             GROUP BY DATE(pr.RecordedAt), u.UserId, u.UserName
             ORDER BY Date DESC, TotalCount DESC;";
 
@@ -108,14 +108,14 @@ public class PushupsRepository : IPushupsRepository
     // Реализация остальных методов IRepository<PushupsRecord>
     public async Task<PushupsRecord> GetById(int id)
     {
-        const string query = "SELECT * FROM PushupsRecords WHERE Id = @Id";
+        const string query = "SELECT * FROM pushupsrecords WHERE Id = @Id";
         using var connection = CreateConnection();
         return await connection.QueryFirstOrDefaultAsync<PushupsRecord>(query, new { Id = id });
     }
 
     public async Task<IEnumerable<PushupsRecord>> GetAll()
     {
-        const string query = "SELECT * FROM PushupsRecords";
+        const string query = "SELECT * FROM pushupsrecords";
         using var connection = CreateConnection();
         return await connection.QueryAsync<PushupsRecord>(query);
     }
@@ -123,7 +123,7 @@ public class PushupsRepository : IPushupsRepository
     public async Task Add(PushupsRecord entity)
     {
         const string query = @"
-            INSERT INTO PushupsRecords (UserId, Count, RecordedAt)
+            INSERT INTO pushupsrecords (UserId, Count, RecordedAt)
             VALUES (@UserId, @Count, @RecordedAt)";
         using var connection = CreateConnection();
         await connection.ExecuteAsync(query, entity);
@@ -132,7 +132,7 @@ public class PushupsRepository : IPushupsRepository
     public async Task Update(PushupsRecord entity)
     {
         const string query = @"
-            UPDATE PushupsRecords 
+            UPDATE pushupsrecords 
             SET UserId = @UserId, Count = @Count, RecordedAt = @RecordedAt
             WHERE Id = @Id";
         using var connection = CreateConnection();
@@ -141,7 +141,7 @@ public class PushupsRepository : IPushupsRepository
 
     public async Task Delete(PushupsRecord entity)
     {
-        const string query = "DELETE FROM PushupsRecords WHERE Id = @Id";
+        const string query = "DELETE FROM pushupsrecords WHERE Id = @Id";
         using var connection = CreateConnection();
         await connection.ExecuteAsync(query, new { entity.Id });
     }
